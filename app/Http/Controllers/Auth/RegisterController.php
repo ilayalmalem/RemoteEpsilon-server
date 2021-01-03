@@ -73,14 +73,26 @@ class RegisterController extends Controller
     }
 
     protected function createViaApi(Request $request) {
-        $data['uid'] = $request->id;
-        $data['email'] = $request->email;
-        $data['password'] = $request->password;
+        $response = array('response' => '', 'success'=>false);
 
-        return User::create([
-            'uid' => $data['uid'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $validator = Validator::make($request->all(), [ 
+            'uid' => 'required|unique:users|max:9|min:9',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8'
         ]);
+        
+
+        if ($validator->fails()) {
+            $response['response'] = $validator->errors();
+        } else{
+            //process the request
+            $user = User::create([
+                'uid' => $request->uid,
+                'email' => $request->email,
+                'password' => $request->password
+            ]);
+        }
+
+        return $response;
     }
 }
