@@ -84,7 +84,8 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             $response['response'] = $validator->errors();
-        } else{
+        } 
+        else {
             //process the request
             $user = User::create([
                 'uid' => $request->uid,
