@@ -11,17 +11,16 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:4',
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
             'email' => $request->email,
             'uid' => $request->uid,
             'role' => $request->role,
             'school_id' => 1,
+            'classroom_id' => 1,    
             'password' => bcrypt($request->password)
         ]);
        

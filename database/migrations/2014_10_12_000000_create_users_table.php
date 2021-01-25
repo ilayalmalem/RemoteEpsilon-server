@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('role');
             $table->unsignedBigInteger('school_id');
+            $table->unsignedBigInteger('classroom_id');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

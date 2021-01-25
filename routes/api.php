@@ -20,3 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', 'Api\AuthController@register');
 Route::post('login', 'Api\AuthController@login');
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('assignments', 'AssignmentController@index');
+    Route::get('/assignment/{id}', 'AssignmentController@show');
+    Route::get('/assignments/all', 'AssignmentController@all');
+    Route::get('/assignments/overdue', 'AssignmentController@overdue');
+});
