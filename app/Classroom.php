@@ -8,9 +8,6 @@ class Classroom extends Model
 {
     protected $guarded = [];
     
-    // public function students() {
-    //     return $this->hasMany(User::class);
-    // }
     public function assignments() {
         return $this->hasMany(Assignment::class);
     }

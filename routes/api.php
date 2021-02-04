@@ -24,6 +24,9 @@ Route::post('login', 'Api\AuthController@login');
 Route::middleware('auth:api')->group(function () {
     Route::get('assignments', 'AssignmentController@index');
     Route::get('/assignment/{id}', 'AssignmentController@show');
+    Route::get('/{user}/assignments', 'AssignmentController@ofUser');
     Route::get('/assignments/all', 'AssignmentController@all');
     Route::get('/assignments/overdue', 'AssignmentController@overdue');
+
+    Route::post('/assignments/create', 'AssignmentController@create');
 });

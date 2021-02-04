@@ -48,7 +48,7 @@ class User extends Authenticatable
     public function overdueAssignments()
     {
         $date = date("Y-m-d h:i:s");
-        $assignments = $this->allAssignments()['data']->where('until_date', '<', $date);
+        $assignments = $this->allAssignments()['data']->where('until_date', '<', $date)->values();
 
         return [
             'data' => $assignments,
@@ -65,8 +65,7 @@ class User extends Authenticatable
             $all->push($classroom->classroom_id);
         }
 
-        $assignments = Assignment::whereIn('classroom_id', $all)->with(['user','classroom'])->get();
-        
+        $assignments = Assignment::whereIn('classroom_id', $all)->with(['user','classroom'])->orderByDesc('until_date')->get();
         
         return [
             'data' => $assignments,

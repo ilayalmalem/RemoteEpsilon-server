@@ -15,5 +15,10 @@ class Assignment extends Model
     public function classroom() {
         return $this->belongsTo(Classroom::class);
     }
+    
 
+    public function assets()
+    {
+        return $this->belongsToMany(Asset::class);
+    }
 }

@@ -51,4 +51,38 @@ class AssignmentController extends Controller
     {
         return auth()->user()->overdueAssignments();
     }
+
+    public function ofUser(User $user)
+    {
+        return $user->assignments;
+    }
+
+    public function create(Request $request)
+    {
+        $date = date("Y-m-d H:i", time());
+
+        $data = $request->validate([
+            'title' => 'required|string|max:50',
+            'description' => 'required|string',
+            'classroom_id' => 'required|numeric',
+            'until_date'  => "required|after:$date",
+        ]);
+
+        $data['user_id'] = auth()->user()->id;
+
+        $assignment = new Assignment($data);
+        $files = $request->file('files');
+        $assignment->save();
+        
+        foreach ($files as $file) {
+            $path = $file->store('assets');
+            $assignment->assets()->create([
+                'path' => $path,
+                'name' => auth()->user()->id,
+                'assignment_id' => $assignment->id
+            ]);
+        }
+        
+        return $assignment;
+    }
 }
