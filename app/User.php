@@ -73,4 +73,9 @@ class User extends Authenticatable
         ];
     }
 
+
+    public function responses()
+    {
+        return $this->hasMany(UserResponse::class, 'main_presenter');
+    }
 }

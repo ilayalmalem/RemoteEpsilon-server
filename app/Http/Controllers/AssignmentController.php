@@ -26,7 +26,7 @@ class AssignmentController extends Controller
 
     public function show($id)
     {
-        $assignment = Assignment::where('id', $id)->with('user')->first();
+        $assignment = Assignment::where('id', $id)->with('user', 'assets')->first();
         $isAuthorized = false;
 
         foreach(auth()->user()->classrooms as $classroom) {
@@ -75,10 +75,10 @@ class AssignmentController extends Controller
         $assignment->save();
         
         foreach ($files as $file) {
-            $path = $file->store('assets');
+            $path = $file->storeAs('assets', $file->getClientOriginalName(), ['disk' => 'public']);
             $assignment->assets()->create([
                 'path' => $path,
-                'name' => auth()->user()->id,
+                'name' => $file->getClientOriginalName(),
                 'assignment_id' => $assignment->id
             ]);
         }
