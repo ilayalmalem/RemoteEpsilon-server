@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Assignment;
 use App\Classroom;
 use App\User;
+
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
@@ -79,7 +80,9 @@ class AssignmentController extends Controller
             $assignment->assets()->create([
                 'path' => $path,
                 'name' => $file->getClientOriginalName(),
-                'assignment_id' => $assignment->id
+                'assignment_id' => $assignment->id,
+                'extension' => $file->extension(),
+                'size' => $file->getSize()
             ]);
         }
         

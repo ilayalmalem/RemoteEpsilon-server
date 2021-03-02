@@ -30,4 +30,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/assignments/overdue', 'AssignmentController@overdue');
     Route::post('/assignments/create', 'AssignmentController@create');
     Route::post('/assignment/{assignment}/turn-in', 'ResponseController@turnIn');
+    Route::get('/events', 'EventsController@index');
+    Route::get('/classroom-events', 'EventsController@classroomEvents');
 });

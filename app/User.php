@@ -65,7 +65,7 @@ class User extends Authenticatable
             $all->push($classroom->classroom_id);
         }
 
-        $assignments = Assignment::whereIn('classroom_id', $all)->with(['user','classroom'])->orderByDesc('until_date')->get();
+        $assignments = Assignment::whereIn('classroom_id', $all)->with(['user','classroom'])->orderByDesc('created_at')->get();
         
         return [
             'data' => $assignments,
@@ -77,5 +77,10 @@ class User extends Authenticatable
     public function responses()
     {
         return $this->hasMany(UserResponse::class, 'main_presenter');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 }
