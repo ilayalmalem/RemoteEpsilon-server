@@ -16,4 +16,9 @@ class Asset extends Model
     public function responses() {
         return $this->belongsToMany(UserResponse::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

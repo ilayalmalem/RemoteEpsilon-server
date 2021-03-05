@@ -75,15 +75,18 @@ class AssignmentController extends Controller
         $files = $request->file('files');
         $assignment->save();
         
-        foreach ($files as $file) {
-            $path = $file->storeAs('assets', $file->getClientOriginalName(), ['disk' => 'public']);
-            $assignment->assets()->create([
-                'path' => $path,
-                'name' => $file->getClientOriginalName(),
-                'assignment_id' => $assignment->id,
-                'extension' => $file->extension(),
-                'size' => $file->getSize()
-            ]);
+        if($files) {
+            foreach ($files as $file) {
+                $path = $file->storeAs('assets', $file->getClientOriginalName(), ['disk' => 'public']);
+                $assignment->assets()->create([
+                    'path' => $path,
+                    'name' => $file->getClientOriginalName(),
+                    'assignment_id' => $assignment->id,
+                    'user_id' => auth()->user()->id,
+                    'extension' => $file->extension(),
+                    'size' => $file->getSize()
+                ]);
+            }
         }
         
         return $assignment;

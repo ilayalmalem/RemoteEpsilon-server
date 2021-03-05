@@ -83,4 +83,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class);
     }
+
+    public function getTotalAssetsSizeAttribute() {
+        return Asset::where('user_id', $this->id)->sum('size');
+    }
+
+    public function assets() {
+        return $this->hasMany(Asset::class);
+    }
 }

@@ -14,15 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('register', 'Api\AuthController@register');
 Route::post('login', 'Api\AuthController@login');
 Route::get('download/{asset}', 'DownloadsController@download');
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('user', 'DataController@index');
     Route::get('assignments', 'AssignmentController@index');
     Route::get('/assignment/{id}', 'AssignmentController@show');
     Route::get('/{user}/assignments', 'AssignmentController@ofUser');
@@ -32,4 +29,5 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/assignment/{assignment}/turn-in', 'ResponseController@turnIn');
     Route::get('/events', 'EventsController@index');
     Route::get('/classroom-events', 'EventsController@classroomEvents');
+    Route::get('/assets', 'DataController@assets');
 });
