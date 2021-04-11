@@ -30,4 +30,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/events', 'EventsController@index');
     Route::get('/classroom-events', 'EventsController@classroomEvents');
     Route::get('/assets', 'DataController@assets');
+    Route::get('/classrooms', 'ClassroomController@index');
 });
